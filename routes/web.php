@@ -6,7 +6,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/bibliotech', function () {
-    return view('bibliotech.index');
+Route::get('/libra', function () {
+    return view('libra.login');
+});
+
+Route::get('/register', function () {
+    return view('libra.register');
+});
+
+Route::get('/libra/index', function () {
+    return view('libra.index');
 });
 
