@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filiere extends Model
 {
-    /** @use HasFactory<\Database\Factories\FiliereFactory> */
-    use HasFactory;
+    protected $fillable = ['nom'];
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }
