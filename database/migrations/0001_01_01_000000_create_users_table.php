@@ -15,15 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('nom');
-            $table->string('prenom');
             $table->string('email')->unique();
             $table->string('telephone')->nullable();
             $table->string('profile_image')->nullable();
-            $table->string('telephone')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('password');
-            $table->enum('role', ['enseignant', 'etudiant'])->default('etudiant');
             $table->enum('role', ['enseignant', 'etudiant'])->default('etudiant');
             $table->timestamps();
         });

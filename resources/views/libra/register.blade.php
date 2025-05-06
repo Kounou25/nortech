@@ -41,7 +41,7 @@
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-2xl"> <!-- Augmentation de la largeur max -->
+        <div class="sm:mx-auto sm:w-full sm:max-w-2xl">
             <div class="flex justify-center">
                 <!-- Logo animé -->
                 <div class="animate-bounce">
@@ -59,8 +59,8 @@
         </div>
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
-            <div class="bg-white py-8 px-6 shadow-xl rounded-xl sm:px-10 border border-gray-100"> <!-- Ombre plus prononcée -->
-                <!-- Barre de progression -->
+            <div class="bg-white py-8 px-6 shadow-xl rounded-xl sm:px-10 border border-gray-100">
+                <!-- Barre de progression
                 <div class="mb-8">
                     <div class="flex justify-between mb-2">
                         <span class="text-sm font-medium text-alphatek-blue">Étape 1 sur 2</span>
@@ -69,9 +69,9 @@
                     <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-alphatek-blue h-2.5 rounded-full" style="width: 25%"></div>
                     </div>
-                </div>
+                </div> -->
 
-                <form class="space-y-6" action="#" method="POST" enctype="multipart/form-data">
+                <form class="space-y-6" action="/libra/register" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <!-- Section Informations Personnelles -->
@@ -91,7 +91,7 @@
                                 </label>
                                 <div class="relative mt-1 rounded-md shadow-sm">
                                     <input id="last_name" name="last_name" type="text" required 
-                                           class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm"
+                                           class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('last_name') border-red-500 @enderror"
                                            placeholder="Dupont">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -99,6 +99,9 @@
                                         </svg>
                                     </div>
                                 </div>
+                                @error('last_name')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div>
@@ -108,7 +111,7 @@
                                 </label>
                                 <div class="relative mt-1 rounded-md shadow-sm">
                                     <input id="first_name" name="first_name" type="text" required 
-                                           class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm"
+                                           class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('first_name') border-red-500 @enderror"
                                            placeholder="Jean">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -116,10 +119,13 @@
                                         </svg>
                                     </div>
                                 </div>
+                                @error('first_name')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <!-- Email amélioré -->
+                        <!-- Email -->
                         <div class="mt-4">
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                                 Email professionnel
@@ -127,7 +133,7 @@
                             </label>
                             <div class="relative mt-1 rounded-md shadow-sm">
                                 <input id="email" name="email" type="email" autocomplete="email" required 
-                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm"
+                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('email') border-red-500 @enderror"
                                        placeholder="jean.dupont@entreprise.com">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -136,22 +142,43 @@
                                     </svg>
                                 </div>
                             </div>
+                            @error('email')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-xs text-gray-500">Utilisez votre email professionnel</p>
                         </div>
 
-                        <!-- Téléphone avec sélecteur de pays -->
+                        <!-- Téléphone -->
                         <div class="mt-4">
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
                                 Téléphone portable
                             </label>
                             <div class="mt-1">
                                 <input id="phone" name="phone" type="tel" 
-                                       class="block w-full rounded-md border-gray-300 pl-3 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm">
+                                       class="block w-full rounded-md border-gray-300 pl-3 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('phone') border-red-500 @enderror">
                             </div>
+                            @error('phone')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-xs text-gray-500">Pour les notifications importantes</p>
                         </div>
 
-                        <!-- Photo de profil améliorée -->
+                        <!-- Rôle -->
+                        <div class="mt-4">
+                            <label for="role" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                Rôle
+                                <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <select id="role" name="role" required class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('role') border-red-500 @enderror">
+                                <option value="etudiant">Étudiant</option>
+                                <option value="enseignant">Enseignant</option>
+                            </select>
+                            @error('role')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Photo de profil -->
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Photo de profil
@@ -179,6 +206,9 @@
                                     </button>
                                 </div>
                             </div>
+                            @error('profile_photo')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-xs text-gray-500">JPEG, PNG ou GIF (max. 5MB)</p>
                         </div>
                     </div>
@@ -192,7 +222,7 @@
                             Sécurité du compte
                         </h3>
 
-                        <!-- Mot de passe avec indicateur de force -->
+                        <!-- Mot de passe -->
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                                 Mot de passe
@@ -200,7 +230,7 @@
                             </label>
                             <div class="relative mt-1 rounded-md shadow-sm">
                                 <input id="password" name="password" type="password" autocomplete="new-password" required 
-                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm"
+                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('password') border-red-500 @enderror"
                                        placeholder="••••••••">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                                     <button type="button" id="toggle-password" class="text-gray-400 hover:text-gray-500">
@@ -211,6 +241,9 @@
                                     </button>
                                 </div>
                             </div>
+                            @error('password')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
                             <div class="mt-2">
                                 <div class="flex items-center space-x-2">
                                     <div id="password-strength" class="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
@@ -234,7 +267,7 @@
                             </label>
                             <div class="relative mt-1 rounded-md shadow-sm">
                                 <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required 
-                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm"
+                                       class="block w-full rounded-md border-gray-300 pl-3 pr-10 py-2 focus:ring-alphatek-blue focus:border-alphatek-blue sm:text-sm @error('password_confirmation') border-red-500 @enderror"
                                        placeholder="••••••••">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                                     <button type="button" id="toggle-password-confirmation" class="text-gray-400 hover:text-gray-500">
@@ -245,6 +278,9 @@
                                     </button>
                                 </div>
                             </div>
+                            @error('password_confirmation')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
                             <div id="password-match" class="hidden mt-1 text-sm text-green-600 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -254,49 +290,14 @@
                         </div>
                     </div>
 
-                    <!-- Conditions améliorées -->
-                    <div class="pt-2">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="terms" name="terms" type="checkbox" required 
-                                       class="focus:ring-alphatek-blue h-4 w-4 text-alphatek-blue border-gray-300 rounded">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="terms" class="font-medium text-gray-700">
-                                    J'accepte les <a href="#" class="text-alphatek-blue hover:text-blue-500 underline">conditions générales</a>
-                                    et la <a href="#" class="text-alphatek-blue hover:text-blue-500 underline">politique de confidentialité</a>
-                                    <span class="text-red-500 ml-1">*</span>
-                                </label>
-                                <p class="text-xs text-gray-500 mt-1">
-                                    En cochant cette case, vous acceptez nos termes et conditions d'utilisation.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start mt-4">
-                            <div class="flex items-center h-5">
-                                <input id="newsletter" name="newsletter" type="checkbox" 
-                                       class="focus:ring-alphatek-blue h-4 w-4 text-alphatek-blue border-gray-300 rounded">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="newsletter" class="font-medium text-gray-700">
-                                    Je souhaite recevoir la newsletter Libra
-                                </label>
-                                <p class="text-xs text-gray-500 mt-1">
-                                    Recevez nos dernières actualités et offres spéciales.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bouton d'inscription amélioré -->
+                    <!-- Bouton d'inscription -->
                     <div class="pt-4">
                         <button type="submit" id="submit-btn" 
                                 class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-alphatek-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-alphatek-blue transition-colors duration-300 transform hover:scale-[1.01]">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 -ml-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
                             </svg>
-                            Créer mon compte
+                           기술 Créer mon compte
                         </button>
                     </div>
                 </form>
@@ -337,12 +338,6 @@
 
             <div class="mt-6 text-center text-sm text-gray-600">
                 <p>
-                    En créant un compte, vous acceptez nos 
-                    <a href="#" class="font-medium text-alphatek-blue hover:text-blue-500 underline">Conditions d'utilisation</a>
-                    et notre 
-                    <a href="#" class="font-medium text-alphatek-blue hover:text-blue-500 underline">Politique de confidentialité</a>.
-                </p>
-                <p class="mt-2">
                     Déjà membre? 
                     <a href="#" class="font-medium text-alphatek-blue hover:text-blue-500 underline">Connectez-vous</a>
                 </p>
@@ -456,6 +451,13 @@
             preferredCountries: ["fr", "be", "ch", "ca", "us"],
             separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        // Formatage du numéro de téléphone avant soumission
+        document.querySelector('form').addEventListener('submit', function() {
+            if (phoneInput.value.trim()) {
+                phoneInput.value = iti.getNumber();
+            }
         });
 
         // Animation au chargement
