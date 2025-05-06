@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -56,7 +57,7 @@ class UserController extends Controller
             // auth()->login($user);
 
             // Redirection vers une page de bienvenue ou tableau de bord
-            return redirect()->route('libra/index')
+            return redirect()->route('index')
                 ->with('success', 'Inscription réussie ! Bienvenue sur Libra.');
 
         } catch (\Exception $e) {
@@ -64,5 +65,45 @@ class UserController extends Controller
                 ->with('error', 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.')
                 ->withInput();
         }
+    }
+
+
+    public function login(Request $request)
+    {
+        // Validation des données
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+            'remember' => 'nullable|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Tentative de connexion
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+            // Connexion réussie
+            $request->session()->regenerate();
+
+            // Option 1 : Stocker l'email dans la session (décommentez si vous préférez la session)
+            $request->session()->put('user_email', $request->email);
+
+            // Option 2 : Pour localStorage, passer l'email à la vue via la session flash
+            $request->session()->flash('user_email', $request->email);
+
+            return redirect()->route('index')
+                ->with('success', 'Connexion réussie ! Bienvenue sur Libra.');
+        }
+
+        // Échec de la connexion
+        return redirect()->back()
+            ->withErrors(['email' => 'Les identifiants fournis sont incorrects.'])
+            ->withInput();
     }
 }

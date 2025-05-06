@@ -28,7 +28,8 @@ Route::get('/libra/index', function () {
     return view('libra.index');
 })->name('index');
 
-// Tableau de bord (après inscription)
-Route::get('/libra/dashboard', function () {
-    return view('libra.dashboard');
-})->name('dashboard');
+Route::get('/libra/login', function () {
+    return view('libra.login');
+})->name('login');
+
+Route::post('/libra/login', [UserController::class, 'login'])->name('login');
