@@ -33,3 +33,7 @@ Route::get('/libra/login', function () {
 })->name('login');
 
 Route::post('/libra/login', [UserController::class, 'login'])->name('login');
+
+Route::get('/libra/teachers', function () {
+    return view('libra.teachers.index');
+})->name('index');
