@@ -60,16 +60,7 @@
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
             <div class="bg-white py-8 px-6 shadow-xl rounded-xl sm:px-10 border border-gray-100">
-                <!-- Barre de progression
-                <div class="mb-8">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-sm font-medium text-alphatek-blue">Étape 1 sur 2</span>
-                        <span class="text-sm font-medium">25% complété</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-alphatek-blue h-2.5 rounded-full" style="width: 25%"></div>
-                    </div>
-                </div> -->
+               
 
                 <form class="space-y-6" action="/libra/register" method="POST" enctype="multipart/form-data">
                     @csrf
