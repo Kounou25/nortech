@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DocumentController;
+
+use App\Http\Controllers\FiliereController;
+
+
 
 
 
@@ -33,7 +38,5 @@ Route::get('/libra/login', function () {
 })->name('login');
 
 Route::post('/libra/login', [UserController::class, 'login'])->name('login');
-
-Route::get('/libra/teachers', function () {
-    return view('libra.teachers.index');
-})->name('index');
+Route::get('/libra/teachers', [FiliereController::class, 'index'])->name('teachers.index');
+Route::post('/libra/teachers', [DocumentController::class, 'store'])->name('store');

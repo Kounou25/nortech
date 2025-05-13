@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFiliereRequest;
 use App\Http\Requests\UpdateFiliereRequest;
 use App\Models\Filiere;
+use App\Models\Niveau;
+
 
 class FiliereController extends Controller
 {
@@ -13,7 +15,9 @@ class FiliereController extends Controller
      */
     public function index()
     {
-        //
+        $filieres = Filiere::all();
+        $niveaux = Niveau::all();
+        return view('libra.teachers.index', compact('filieres','niveaux'));
     }
 
     /**

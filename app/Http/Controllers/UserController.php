@@ -83,6 +83,8 @@ class UserController extends Controller
                 ->withInput();
         }
 
+        $role = User::where('email', $request->email)->value('role');
+
         // Tentative de connexion
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
@@ -95,12 +97,16 @@ class UserController extends Controller
             $request->session()->put('user_email', $request->email);
 
             // Option 2 : Pour localStorage, passer l'email à la vue via la session flash
-            $request->session()->flash('user_email', $request->email);
+            //$request->session()->flash('user_email', $request->email);
 
-            return redirect()->route('index')
-                ->with('success', 'Connexion réussie ! Bienvenue sur Libra.');
+           if ($role === 'enseignant') {
+                return redirect()->route('teachers.index')
+                    ->with('success', 'Connexion réussie ! Bienvenue'.'   '.$request->email);
+            } elseif ($role === 'etudiant') {
+                return redirect()->route('libra.students.index')
+                    ->with('success', 'Connexion réussie ! Bienvenue'.$request->email);
+            }
         }
-
         // Échec de la connexion
         return redirect()->back()
             ->withErrors(['email' => 'Les identifiants fournis sont incorrects.'])

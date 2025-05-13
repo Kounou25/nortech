@@ -2,65 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDocumentRequest;
-use App\Http\Requests\UpdateDocumentRequest;
 use App\Models\Document;
+use App\Models\User;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Store a newly created document in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    public function store(Request $request)
+{
+    $userId = User::where('email', $request->session()->get('user_email'))->first();
+        // Validation des données
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'filiere' => 'required|exists:filieres,id',
+            'description' => 'required|string',
+            'niveau' => 'required|exists:niveaux,id',
+            'couverture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        try {
+            // Gestion de l'upload de l'image
+            $couverturePath = null;
+            if ($request->hasFile('couverture')) {
+                $couverturePath = $request->file('couverture')->store('couverture', 'public');
+            }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDocumentRequest $request)
-    {
-        //
-    }
+            // Création du document
+            $document = Document::create([
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'file_path' => $couverturePath,
+                'uploaded_by' =>$userId->id , // Récupère user_id depuis la session
+                'filiere_id' => $validated['filiere'],
+                'niveau_id' => $validated['niveau'],
+                
+                
+            ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Document $document)
-    {
-        //
-    }
+            return redirect()->route('libra.teachers.index')->with('success', 'Document ajouté avec succès !');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Document $document)
-    {
-        //
-    }
+        } catch (\Exception $e) {
+            // Suppression du fichier uploadé en cas d'erreur
+            if ($couverturePath) {
+                Storage::disk('public')->delete($couverturePath);
+            }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateDocumentRequest $request, Document $document)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Document $document)
-    {
-        //
+            return back()->withErrors(['error' => 'Une erreur est survenue lors de l\'ajout du document.'.$couverturePath.''.$validated['title'].' '. $userId->id])->withInput();
+        }
     }
 }
