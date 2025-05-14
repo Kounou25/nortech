@@ -61,9 +61,10 @@ class DocumentController extends Controller
 
     public function index()
     {
-        // Récupérer tous les documents
-        $documents = Document::all();
-
+        // Récupérer les documents avec les noms de filière et de niveau
+        $documents = Document::with(['filiere', 'niveau'])->get();
+    
         return view('libra.index', compact('documents'));
     }
+    
 }

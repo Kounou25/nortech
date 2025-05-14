@@ -205,8 +205,8 @@
                     <h3 class="text-base font-semibold mb-2 line-clamp-2">{{$Document->title}}</h3>
                     <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{$Document->description}}</p>
                     <div class="flex gap-2 mb-3 flex-wrap">
-                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">Littérature</span>
-                        <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">Licence 2</span>
+                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">{{$Document->filiere->nom}}</span>
+                        <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">{{$Document->niveau->nom}}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-1 text-yellow-500 text-sm">
