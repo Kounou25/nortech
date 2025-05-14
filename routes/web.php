@@ -29,9 +29,9 @@ Route::get('/libra/register', function () {
 Route::post('/libra/register', [UserController::class, 'register'])->name('register');
 
 // Page principale de l'application
-Route::get('/libra/index', function () {
-    return view('libra.index');
-})->name('index');
+// Route::get('/libra/index', function () {
+//     return view('libra.index');
+// })->name('index');
 
 Route::get('/libra/login', function () {
     return view('libra.login');
@@ -40,3 +40,4 @@ Route::get('/libra/login', function () {
 Route::post('/libra/login', [UserController::class, 'login'])->name('login');
 Route::get('/libra/teachers', [FiliereController::class, 'index'])->name('teachers.index');
 Route::post('/libra/teachers', [DocumentController::class, 'store'])->name('store');
+Route::get('/libra/index', [DocumentController::class, 'index'])->name('index');

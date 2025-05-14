@@ -58,4 +58,12 @@ class DocumentController extends Controller
             return back()->withErrors(['error' => 'Une erreur est survenue lors de l\'ajout du document.'.$couverturePath.''.$validated['title'].' '. $userId->id])->withInput();
         }
     }
+
+    public function index()
+    {
+        // Récupérer tous les documents
+        $documents = Document::all();
+
+        return view('libra.index', compact('documents'));
+    }
 }

@@ -103,7 +103,7 @@ class UserController extends Controller
                 return redirect()->route('teachers.index')
                     ->with('success', 'Connexion réussie ! Bienvenue'.'   '.$request->email);
             } elseif ($role === 'etudiant') {
-                return redirect()->route('libra.students.index')
+                return redirect()->route('index')
                     ->with('success', 'Connexion réussie ! Bienvenue'.$request->email);
             }
         }
