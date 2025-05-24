@@ -153,6 +153,7 @@
                             <option value="">Sélectionnez un niveau</option>
                             @foreach($niveaux as $niveau)
                                 <option value="{{ $niveau->id }}" {{ old('niveau') == $niveau->id ? 'selected' : '' }}>{{ $niveau->nom }}</option>
+
                             @endforeach
                         </select>
                         @error('niveau')
@@ -163,6 +164,17 @@
                     <div>
                         <label for="couverture" class="block text-sm font-medium text-gray-700">Couverture (Image)</label>
                         <input type="file" id="couverture" name="couverture" accept="image/*" class="mt-2 w-full p-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500">
+                        <div id="image-preview" class="mt-3 hidden">
+                            <img src="#" alt="Prévisualisation" class="w-48 h-48 object-cover rounded-lg">
+                        </div>
+                        @error('couverture')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="fichier" class="block text-sm font-medium text-gray-700">Document (PDF)</label>
+                        <input type="file" id="fichier" name="fichier" accept="application/pdf" class="mt-2 w-full p-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500">
                         <div id="image-preview" class="mt-3 hidden">
                             <img src="#" alt="Prévisualisation" class="w-48 h-48 object-cover rounded-lg">
                         </div>

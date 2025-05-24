@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telephone')->nullable();
             $table->string('profile_image')->nullable();
-            $table->string('profile_image')->nullable();
             $table->string('password');
             $table->enum('role', ['enseignant', 'etudiant'])->default('etudiant');
             $table->timestamps();

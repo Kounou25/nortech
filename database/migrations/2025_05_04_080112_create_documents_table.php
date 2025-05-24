@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('file_path');
+            $table->string('document_path');
             $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade');
             $table->foreignId('filiere_id')->constrained('filieres')->onDelete('cascade');
             $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('cascade');

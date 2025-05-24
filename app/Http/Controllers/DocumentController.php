@@ -25,14 +25,18 @@ class DocumentController extends Controller
             'filiere' => 'required|exists:filieres,id',
             'description' => 'required|string',
             'niveau' => 'required|exists:niveaux,id',
-            'couverture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
+            'couverture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB
+            'fichier' => 'nullable|mimes:pdf', // 5MB max
+
         ]);
 
         try {
             // Gestion de l'upload de l'image
             $couverturePath = null;
-            if ($request->hasFile('couverture')) {
+            $documentPath= null;
+            if ($request->hasFile('couverture') && $request->hasFile('fichier')) {
                 $couverturePath = $request->file('couverture')->store('couverture', 'public');
+                $documentPath = $request->file('fichier')->store('documents', 'public');
             }
 
             // Création du document
@@ -40,6 +44,7 @@ class DocumentController extends Controller
                 'title' => $validated['title'],
                 'description' => $validated['description'],
                 'file_path' => $couverturePath,
+                'document_path' => $documentPath,
                 'uploaded_by' =>$userId->id , // Récupère user_id depuis la session
                 'filiere_id' => $validated['filiere'],
                 'niveau_id' => $validated['niveau'],
@@ -51,9 +56,9 @@ class DocumentController extends Controller
 
         } catch (\Exception $e) {
             // Suppression du fichier uploadé en cas d'erreur
-            if ($couverturePath) {
-                Storage::disk('public')->delete($couverturePath);
-            }
+            // if ($couverturePath) {
+            //     Storage::disk('public')->delete($couverturePath);
+            // }
 
             return back()->withErrors(['error' => 'Une erreur est survenue lors de l\'ajout du document.'.$couverturePath.''.$validated['title'].' '. $userId->id])->withInput();
         }
@@ -63,8 +68,9 @@ class DocumentController extends Controller
     {
         // Récupérer les documents avec les noms de filière et de niveau
         $documents = Document::with(['filiere', 'niveau'])->get();
+        $AllDocuments = Document::all();
     
-        return view('libra.index', compact('documents'));
+        return view('libra.index', compact('documents','AllDocuments'));
     }
     
 }

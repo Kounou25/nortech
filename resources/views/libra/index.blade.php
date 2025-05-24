@@ -194,12 +194,13 @@
                 <div class="relative">
                     <span class="absolute top-3 left-3 bg-[var(--accent)] text-white text-xs font-semibold px-2 py-1 rounded">Nouveau</span>
                     <img 
-                        src="{{$Document->file_path}}" 
-                        alt="{{$Document->title}}" 
-                        class="w-full h-48 object-cover" 
-                        loading="lazy"
-                        onerror="this.src='https://via.placeholder.com/300x200?text=Image+indisponible'"
-                    >
+    src="{{ asset('storage/' . $Document->file_path) }}" 
+    alt="{{ $Document->title }}" 
+    class="w-full h-48 object-cover" 
+    loading="lazy"
+    onerror="this.onerror=null; this.src='{{ asset('images/default.jpg') }}';"
+/>
+
                 </div>
                 <div class="p-4">
                     <h3 class="text-base font-semibold mb-2 line-clamp-2">{{$Document->title}}</h3>
@@ -213,9 +214,10 @@
                             <i class="fas fa-star"></i>
                             <span>4.8</span>
                         </div>
-                        <button class="bg-[var(--primary)] text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 text-sm transition-colors">
-                            Lire
-                        </button>
+                        <a href="{{ asset('storage/' . $Document->document_path) }}" target="_blank" 
+   class="bg-[var(--primary)] text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 text-sm transition-colors inline-block text-center">
+   Lire
+</a>
                     </div>
                 </div>
             </div>
